@@ -48,6 +48,23 @@
   <section class="hero" id="hero">
     <div class="hero-noise"></div>
     <div class="hero-grid-lines"></div>
+
+    <!-- Luces ambientales (glow) -->
+    <div class="hero-glow hero-glow-1" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow-2" aria-hidden="true"></div>
+
+    <!-- Partículas flotantes (canvas, generado por JS) -->
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+
+    <!-- Ecualizador decorativo de fondo -->
+    <div class="hero-eq" id="heroEq" aria-hidden="true"></div>
+
+    <!-- Onda de sonido decorativa -->
+    <svg class="hero-wave" id="heroWave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+      <path class="hero-wave-path hero-wave-path-1" d="M0,60 Q150,10 300,60 T600,60 T900,60 T1200,60" />
+      <path class="hero-wave-path hero-wave-path-2" d="M0,60 Q150,110 300,60 T600,60 T900,60 T1200,60" />
+    </svg>
+
     <div class="hero-content">
       <p class="hero-eyebrow">Software de producción musical · Código abierto · Gratis</p>
       <h1 class="hero-title">
@@ -74,46 +91,116 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="daw-mockup">
+      <div class="daw-mockup" id="dawMockup">
         <div class="daw-titlebar">
           <span class="daw-dot red"></span>
           <span class="daw-dot yellow"></span>
           <span class="daw-dot green"></span>
           <span class="daw-titlename">Penyy_royal_studio — proyecto_sin_nombre.prs</span>
+          <div class="daw-tabs" role="tablist" aria-label="Vistas del DAW">
+            <button class="daw-tab active" data-view="timeline" role="tab" aria-selected="true">Timeline</button>
+            <button class="daw-tab" data-view="mixer" role="tab" aria-selected="false">Mixer</button>
+            <button class="daw-tab" data-view="pianoroll" role="tab" aria-selected="false">Piano Roll</button>
+          </div>
         </div>
+
         <div class="daw-body">
-          <div class="daw-tracks">
-            <div class="daw-track" style="--c:#8B1A1A">
-              <div class="track-label"><i class="fas fa-guitar"></i> Guitarra</div>
-              <div class="track-wave">
-                <div class="waveform" data-track="1"></div>
-              </div>
+
+          <!-- ── Vista: TIMELINE ── -->
+          <div class="daw-view daw-view-timeline active" data-view-panel="timeline">
+            <div class="daw-ruler" id="dawRuler" aria-hidden="true">
+              <span>0:00</span><span>0:04</span><span>0:08</span><span>0:12</span>
+              <span>0:16</span><span>0:20</span><span>0:24</span><span>0:28</span>
+              <div class="daw-playhead" id="dawPlayhead"></div>
             </div>
-            <div class="daw-track" style="--c:#4A5240">
-              <div class="track-label"><i class="fas fa-drum"></i> Batería</div>
-              <div class="track-wave">
-                <div class="waveform" data-track="2"></div>
+            <div class="daw-tracks">
+              <div class="daw-track" style="--c:#8B1A1A">
+                <div class="track-label"><i class="fas fa-guitar"></i> Guitarra
+                  <span class="track-plugins"><span class="plugin-chip">EQ</span><span class="plugin-chip">Comp</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="1"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="1"></span></div>
               </div>
-            </div>
-            <div class="daw-track" style="--c:#7A6840">
-              <div class="track-label"><i class="fas fa-microphone"></i> Voz</div>
-              <div class="track-wave">
-                <div class="waveform" data-track="3"></div>
+              <div class="daw-track" style="--c:#4A5240">
+                <div class="track-label"><i class="fas fa-drum"></i> Batería
+                  <span class="track-plugins"><span class="plugin-chip">Gate</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="2"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="2"></span></div>
               </div>
-            </div>
-            <div class="daw-track" style="--c:#3A5A5A">
-              <div class="track-label"><i class="fas fa-music"></i> Bajo</div>
-              <div class="track-wave">
-                <div class="waveform" data-track="4"></div>
+              <div class="daw-track" style="--c:#7A6840">
+                <div class="track-label"><i class="fas fa-microphone"></i> Voz
+                  <span class="track-plugins"><span class="plugin-chip">Reverb</span><span class="plugin-chip">De-ess</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="3"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="3"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#3A5A5A">
+                <div class="track-label"><i class="fas fa-music"></i> Bajo
+                  <span class="track-plugins"><span class="plugin-chip">Comp</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="4"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="4"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#6B4A8B">
+                <div class="track-label"><i class="fas fa-wave-square"></i> Synth
+                  <span class="track-plugins"><span class="plugin-chip">Delay</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="5"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="5"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#8B6B2A">
+                <div class="track-label"><i class="fas fa-piano-keyboard" style="font-family:inherit">🎹</i> Piano
+                  <span class="track-plugins"><span class="plugin-chip">Reverb</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="6"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="6"></span></div>
               </div>
             </div>
           </div>
+
+          <!-- ── Vista: MIXER ── -->
+          <div class="daw-view daw-view-mixer" data-view-panel="mixer">
+            <div class="mixer-strips">
+              <div class="mixer-strip" style="--c:#8B1A1A"><span class="strip-label">Gtr</span><div class="strip-fader"><div class="fader-fill" style="height:62%"></div><div class="fader-knob" style="bottom:62%"></div></div><span class="strip-db">-4dB</span></div>
+              <div class="mixer-strip" style="--c:#4A5240"><span class="strip-label">Bat</span><div class="strip-fader"><div class="fader-fill" style="height:78%"></div><div class="fader-knob" style="bottom:78%"></div></div><span class="strip-db">-1dB</span></div>
+              <div class="mixer-strip" style="--c:#7A6840"><span class="strip-label">Voz</span><div class="strip-fader"><div class="fader-fill" style="height:70%"></div><div class="fader-knob" style="bottom:70%"></div></div><span class="strip-db">-2dB</span></div>
+              <div class="mixer-strip" style="--c:#3A5A5A"><span class="strip-label">Bajo</span><div class="strip-fader"><div class="fader-fill" style="height:55%"></div><div class="fader-knob" style="bottom:55%"></div></div><span class="strip-db">-6dB</span></div>
+              <div class="mixer-strip" style="--c:#6B4A8B"><span class="strip-label">Syn</span><div class="strip-fader"><div class="fader-fill" style="height:44%"></div><div class="fader-knob" style="bottom:44%"></div></div><span class="strip-db">-9dB</span></div>
+              <div class="mixer-strip" style="--c:#8B6B2A"><span class="strip-label">Pno</span><div class="strip-fader"><div class="fader-fill" style="height:50%"></div><div class="fader-knob" style="bottom:50%"></div></div><span class="strip-db">-7dB</span></div>
+              <div class="mixer-strip mixer-strip-master"><span class="strip-label">Master</span><div class="strip-fader"><div class="fader-fill" style="height:85%"></div><div class="fader-knob" style="bottom:85%"></div></div><span class="strip-db">0dB</span></div>
+            </div>
+          </div>
+
+          <!-- ── Vista: PIANO ROLL ── -->
+          <div class="daw-view daw-view-pianoroll" data-view-panel="pianoroll">
+            <div class="pianoroll" id="pianoRoll" aria-hidden="true">
+              <!-- grilla y notas generadas por CSS/JS -->
+            </div>
+          </div>
+
           <div class="daw-transport">
             <button class="transport-btn"><i class="fas fa-backward"></i></button>
             <button class="transport-btn play-btn" id="playBtn"><i class="fas fa-play"></i></button>
             <button class="transport-btn"><i class="fas fa-forward"></i></button>
-            <div class="transport-time">00:02:34</div>
+            <div class="transport-time" id="transportTime">00:02:34</div>
             <div class="transport-bpm">♩ 120 BPM</div>
+            <div class="master-vu" aria-hidden="true">
+              <span class="master-vu-bar" data-master-vu="L"></span>
+              <span class="master-vu-bar" data-master-vu="R"></span>
+            </div>
           </div>
         </div>
       </div>
@@ -323,34 +410,82 @@
         <span class="section-tag">Capturas del programa</span>
         <h2 class="section-title">Mirá cómo se ve<br><em>por dentro</em></h2>
       </div>
-      <div class="screenshots-grid">
-        <!-- Placeholder screenshots -->
-        <div class="screenshot-card">
-          <div class="screenshot-placeholder">
-            <i class="fas fa-layer-group"></i>
-            <p>Vista de pistas principal</p>
-            <span>· Reemplazá con screenshot real ·</span>
+      <!-- Carrusel de capturas -->
+      <div class="screenshots-carousel" id="screenshotsCarousel">
+        <button class="carousel-nav carousel-prev" id="carouselPrev" aria-label="Captura anterior">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="carouselTrack">
+
+            <div class="screenshot-card" data-index="0">
+              <div class="screenshot-placeholder">
+                <i class="fas fa-layer-group"></i>
+                <p>Vista de pistas principal</p>
+                <span>· Reemplazá con screenshot real ·</span>
+              </div>
+              <p class="screenshot-caption">Timeline y editor de pistas<span>Organizá tus pistas de audio y MIDI con un vistazo claro de todo el proyecto.</span></p>
+            </div>
+
+            <div class="screenshot-card" data-index="1">
+              <div class="screenshot-placeholder">
+                <i class="fas fa-sliders"></i>
+                <p>Mixer y efectos</p>
+                <span>· Reemplazá con screenshot real ·</span>
+              </div>
+              <p class="screenshot-caption">Consola de mezcla integrada<span>EQ, compresión y sends por canal, con medidores en tiempo real.</span></p>
+            </div>
+
+            <div class="screenshot-card" data-index="2">
+              <div class="screenshot-placeholder">
+                <i class="fas fa-keyboard"></i>
+                <p>Piano Roll / Editor MIDI</p>
+                <span>· Reemplazá con screenshot real ·</span>
+              </div>
+              <p class="screenshot-caption">Editor de piano roll y MIDI<span>Componé con precisión: velocity, cuantización y automatizaciones.</span></p>
+            </div>
+
+            <div class="screenshot-card" data-index="3">
+              <div class="screenshot-placeholder">
+                <i class="fas fa-plug"></i>
+                <p>Rack de plugins</p>
+                <span>· Reemplazá con screenshot real ·</span>
+              </div>
+              <p class="screenshot-caption">Plugins VST / LV2<span>Cargá tu cadena de efectos favorita en cada canal.</span></p>
+            </div>
+
+            <div class="screenshot-card" data-index="4">
+              <div class="screenshot-placeholder">
+                <i class="fas fa-folder-open"></i>
+                <p>Explorador de samples</p>
+                <span>· Reemplazá con screenshot real ·</span>
+              </div>
+              <p class="screenshot-caption">Biblioteca de samples<span>Arrastrá y soltá samples directamente a tus pistas.</span></p>
+            </div>
+
           </div>
-          <p class="screenshot-caption">Timeline y editor de pistas</p>
         </div>
-        <div class="screenshot-card">
-          <div class="screenshot-placeholder">
-            <i class="fas fa-sliders"></i>
-            <p>Mixer y efectos</p>
-            <span>· Reemplazá con screenshot real ·</span>
-          </div>
-          <p class="screenshot-caption">Consola de mezcla integrada</p>
-        </div>
-        <div class="screenshot-card">
-          <div class="screenshot-placeholder">
-            <i class="fas fa-keyboard"></i>
-            <p>Piano Roll / Editor MIDI</p>
-            <span>· Reemplazá con screenshot real ·</span>
-          </div>
-          <p class="screenshot-caption">Editor de piano roll y MIDI</p>
-        </div>
+
+        <button class="carousel-nav carousel-next" id="carouselNext" aria-label="Siguiente captura">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
-      <p class="screenshots-note"><i class="fas fa-info-circle"></i> Las capturas se reemplazarán con imágenes reales del programa una vez disponibles.</p>
+
+      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Selector de capturas"></div>
+
+      <p class="screenshots-note"><i class="fas fa-info-circle"></i> Las capturas se reemplazarán con imágenes reales del programa una vez disponibles. Hacé clic en cualquiera para verla en grande.</p>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de captura">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+      <div class="lightbox-content" id="lightboxContent">
+        <!-- Se clona la card seleccionada acá, con zoom -->
+      </div>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+      <p class="lightbox-caption" id="lightboxCaption"></p>
     </div>
   </section>
 
@@ -360,7 +495,7 @@
       <div class="section-header">
         <span class="section-tag">Gratis. Para siempre.</span>
         <h2 class="section-title">Descargá<br>Penyy Royal Studio</h2>
-        <p class="section-sub">Versión actual: <strong>v0.1.0 — "In Utero"</strong> · Última actualización: 2025</p>
+        <p class="section-sub">Versión actual: <strong>v0.1.0 — "In Utero"</strong></p>
       </div>
 
       <div class="download-grid">
@@ -408,7 +543,7 @@
           </div>
         </div>
         <!-- Reemplazá href con la URL real del repositorio -->
-        <a href="https://github.com" target="_blank" class="btn btn-github">
+        <a href="https://github.com/joaking777/PennyRoyalStudio" target="_blank" class="btn btn-github">
           <i class="fab fa-github"></i> Ver en GitHub
         </a>
       </div>
@@ -561,7 +696,7 @@
         <div class="footer-links">
           <h4>Proyecto</h4>
           <ul>
-            <li><a href="https://github.com" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+            <li><a href="https://github.com/joaking777/PennyRoyalStudio" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
             <li><a href="#"><i class="fas fa-bug"></i> Reportar un bug</a></li>
             <li><a href="#"><i class="fas fa-code-branch"></i> Contribuir</a></li>
             <li><a href="#"><i class="fas fa-file-alt"></i> Licencia GPL</a></li>
@@ -569,7 +704,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 Penyy Royal Studio · Software libre bajo GNU GPL v3.0</p>
+        <p>© 2026 Penyy Royal Studio · Software libre bajo GNU GPL v3.0</p>
         <p>Inspirado en la música que importa. Hecho con <i class="fas fa-heart" style="color:#8B1A1A"></i> para músicos.</p>
       </div>
     </div>
