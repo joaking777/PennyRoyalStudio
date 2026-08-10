@@ -360,6 +360,452 @@
  
  
 /* ─────────────────────────────────────
+   10. RESPETAR "prefers-reduced-motion"
+   · Helper global para saltear animaciones
+     pesadas si el usuario lo pidió en su SO
+───────────────────────────────────── */
+const PREFERS_REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+
+/* ─────────────────────────────────────
+   11. PARTÍCULAS FLOTANTES DEL HERO
+   · Canvas liviano con partículas tipo
+     "polvo dorado" flotando hacia arriba
+───────────────────────────────────── */
+(function initHeroParticles() {
+  const canvas = document.getElementById('heroParticles');
+  if (!canvas || PREFERS_REDUCED_MOTION) return;
+
+  const ctx = canvas.getContext('2d');
+  const hero = canvas.closest('.hero');
+  let particles = [];
+  let rafId = null;
+
+  const COLORS = ['#DE9F76', '#B37E6C', '#CDAC80'];
+  const PARTICLE_COUNT = window.innerWidth < 768 ? 18 : 40;
+
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: canvas.height + Math.random() * 100,
+      r: Math.random() * 1.8 + 0.6,
+      speed: Math.random() * 0.4 + 0.15,
+      drift: (Math.random() - 0.5) * 0.3,
+      opacity: Math.random() * 0.5 + 0.15,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    };
+  }
+
+  function initParticles() {
+    particles = Array.from({ length: PARTICLE_COUNT }, createParticle);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.y -= p.speed;
+      p.x += p.drift;
+
+      // Reciclar partícula cuando sale por arriba
+      if (p.y < -10) Object.assign(p, createParticle(), { y: canvas.height + 10 });
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.opacity;
+      ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    rafId = requestAnimationFrame(draw);
+  }
+
+  resize();
+  initParticles();
+  draw();
+
+  window.addEventListener('resize', () => {
+    resize();
+  }, { passive: true });
+
+  // Pausar cuando el hero no está visible (ahorro de batería/CPU)
+  const visObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        if (!rafId) draw();
+      } else if (rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    });
+  }, { threshold: 0 });
+  visObserver.observe(hero);
+})();
+
+
+/* ─────────────────────────────────────
+   12. ECUALIZADOR DE FONDO DEL HERO
+   · Genera barras y las anima con
+     alturas pseudo-aleatorias en loop
+───────────────────────────────────── */
+(function initHeroEq() {
+  const eq = document.getElementById('heroEq');
+  if (!eq) return;
+
+  const BAR_COUNT = window.innerWidth < 768 ? 30 : 60;
+  const bars = [];
+
+  for (let i = 0; i < BAR_COUNT; i++) {
+    const bar = document.createElement('div');
+    bar.classList.add('eq-bar');
+    bar.style.height = '4px';
+    eq.appendChild(bar);
+    bars.push(bar);
+  }
+
+  if (PREFERS_REDUCED_MOTION) {
+    bars.forEach(b => { b.style.height = (10 + Math.random() * 40) + 'px'; });
+    return;
+  }
+
+  function tick() {
+    bars.forEach(bar => {
+      if (Math.random() > 0.6) {
+        bar.style.height = Math.round(6 + Math.random() * Math.random() * 130) + 'px';
+        bar.style.transition = 'height 0.4s ease';
+      }
+    });
+    setTimeout(tick, 260);
+  }
+  tick();
+})();
+
+
+/* ─────────────────────────────────────
+   13. PARALLAX AL MOVER EL MOUSE
+   · Las luces de fondo y el mockup del
+     DAW reaccionan sutilmente al mouse
+───────────────────────────────────── */
+(function initMouseParallax() {
+  const hero    = document.getElementById('hero');
+  const glow1   = document.querySelector('.hero-glow-1');
+  const glow2   = document.querySelector('.hero-glow-2');
+  const mockup  = document.getElementById('dawMockup');
+  if (!hero || PREFERS_REDUCED_MOTION) return;
+
+  let ticking = false;
+
+  hero.addEventListener('mousemove', (e) => {
+    if (ticking) return;
+    ticking = true;
+
+    requestAnimationFrame(() => {
+      const rect = hero.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 → 0.5
+      const relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+      if (glow1) glow1.style.transform = `translate(${relX * -40}px, ${relY * -30}px)`;
+      if (glow2) glow2.style.transform = `translate(${relX * 30}px, ${relY * 40}px)`;
+
+      // Tilt 3D del mockup del DAW (efecto "flota y sigue al mouse")
+      if (mockup) {
+        const rotateY = relX * 10;   // grados
+        const rotateX = relY * -10;
+        mockup.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+      }
+
+      ticking = false;
+    });
+  }, { passive: true });
+
+  hero.addEventListener('mouseleave', () => {
+    if (glow1) glow1.style.transform = '';
+    if (glow2) glow2.style.transform = '';
+    if (mockup) mockup.style.transform = '';
+  });
+})();
+
+
+/* ─────────────────────────────────────
+   14. TABS DEL MOCKUP DEL DAW
+   · Alterna entre las vistas Timeline,
+     Mixer y Piano Roll
+───────────────────────────────────── */
+(function initDawTabs() {
+  const tabs  = document.querySelectorAll('.daw-tab');
+  const panels = document.querySelectorAll('.daw-view');
+  if (!tabs.length) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const view = tab.dataset.view;
+
+      tabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+
+      panels.forEach(panel => {
+        panel.classList.toggle('active', panel.dataset.viewPanel === view);
+      });
+    });
+  });
+})();
+
+
+/* ─────────────────────────────────────
+   15. PIANO ROLL DECORATIVO
+   · Genera notas MIDI de ejemplo en
+     distintas filas para simular una
+     composición real
+───────────────────────────────────── */
+(function initPianoRoll() {
+  const roll = document.getElementById('pianoRoll');
+  if (!roll) return;
+
+  const ROWS = 12;       // "teclas" visibles
+  const ROW_HEIGHT = 15; // debe coincidir con el gradient del CSS
+  const NOTE_COUNT = 26;
+
+  for (let i = 0; i < NOTE_COUNT; i++) {
+    const note = document.createElement('div');
+    note.classList.add('pianoroll-note');
+
+    const row = Math.floor(Math.random() * ROWS);
+    const left = Math.random() * 88; // %
+    const width = 3 + Math.random() * 8; // %
+
+    note.style.top   = (row * ROW_HEIGHT + 2) + 'px';
+    note.style.left  = left + '%';
+    note.style.width = width + '%';
+
+    roll.appendChild(note);
+  }
+})();
+
+
+/* ─────────────────────────────────────
+   16. MEDIDORES VU (por pista + master)
+   · Se activan junto con el play del
+     mockup del DAW (ver sección 2 y 3)
+───────────────────────────────────── */
+(function initVUMeters() {
+  const trackVUs  = document.querySelectorAll('.vu-bar');
+  const masterVUs = document.querySelectorAll('.master-vu-bar');
+  const timeEl    = document.getElementById('transportTime');
+  if (!trackVUs.length && !masterVUs.length) return;
+
+  let playing = false;
+  let rafId = null;
+  let seconds = 154; // arranca en 00:02:34, solo estético
+
+  function randomLevel(max = 100) {
+    return Math.max(6, Math.round(Math.random() * Math.random() * max));
+  }
+
+  function formatTime(totalSeconds) {
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = Math.floor(totalSeconds % 60);
+    return [h, m, s].map(n => String(n).padStart(2, '0')).join(':');
+  }
+
+  let lastTick = 0;
+  function loop(ts) {
+    if (!playing) return;
+
+    trackVUs.forEach(bar => { bar.style.height = randomLevel(100) + '%'; });
+    masterVUs.forEach(bar => {
+      bar.style.setProperty('--level', randomLevel(90) + '%');
+    });
+
+    if (!lastTick || ts - lastTick > 1000) {
+      lastTick = ts;
+      seconds += 1;
+      if (timeEl) timeEl.textContent = formatTime(seconds);
+    }
+
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function start() {
+    playing = true;
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function stop() {
+    playing = false;
+    if (rafId) cancelAnimationFrame(rafId);
+    trackVUs.forEach(bar => { bar.style.height = '8%'; });
+    masterVUs.forEach(bar => { bar.style.setProperty('--level', '12%'); });
+  }
+
+  // Engancha con las funciones existentes del waveform (sección 2/3)
+  const originalPlay  = window._dawPlay;
+  const originalPause = window._dawPause;
+
+  window._dawPlay = function () {
+    originalPlay && originalPlay();
+    start();
+  };
+
+  window._dawPause = function () {
+    originalPause && originalPause();
+    stop();
+  };
+})();
+
+
+/* ─────────────────────────────────────
+   17. TILT 3D EN TARJETAS
+   · Inclinación sutil siguiendo al mouse
+     en feature-cards, step-cards y
+     screenshot-cards para dar profundidad
+───────────────────────────────────── */
+(function initCardTilt() {
+  if (PREFERS_REDUCED_MOTION) return;
+
+  const selector = '.feature-card, .step-card';
+  const cards = document.querySelectorAll(selector);
+  const MAX_TILT = 6; // grados
+
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width - 0.5;
+      const relY = (e.clientY - rect.top) / rect.height - 0.5;
+
+      card.style.transform =
+        `perspective(600px) rotateY(${relX * MAX_TILT * 2}deg) rotateX(${relY * -MAX_TILT * 2}deg) translateY(-4px)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+})();
+
+
+/* ─────────────────────────────────────
+   18. CARRUSEL DE CAPTURAS + LIGHTBOX
+   · Slider con flechas y dots
+   · Lightbox con zoom, navegación y
+     descripciones
+───────────────────────────────────── */
+(function initScreenshotsCarousel() {
+  const track    = document.getElementById('carouselTrack');
+  const prevBtn  = document.getElementById('carouselPrev');
+  const nextBtn  = document.getElementById('carouselNext');
+  const dotsWrap = document.getElementById('carouselDots');
+  if (!track) return;
+
+  const cards = Array.from(track.children);
+  let perView = getPerView();
+  let index = 0;
+
+  function getPerView() {
+    if (window.innerWidth <= 768) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function maxIndex() {
+    return Math.max(0, cards.length - perView);
+  }
+
+  function renderDots() {
+    dotsWrap.innerHTML = '';
+    const dotCount = maxIndex() + 1;
+    for (let i = 0; i < dotCount; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('carousel-dot');
+      dot.setAttribute('aria-label', `Ir a la captura ${i + 1}`);
+      if (i === index) dot.classList.add('active');
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    }
+  }
+
+  function update() {
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const gap = 24; // 1.5rem
+    track.style.transform = `translateX(-${index * (cardWidth + gap)}px)`;
+    renderDots();
+  }
+
+  function goTo(i) {
+    index = Math.min(Math.max(i, 0), maxIndex());
+    update();
+  }
+
+  prevBtn.addEventListener('click', () => goTo(index - 1));
+  nextBtn.addEventListener('click', () => goTo(index + 1));
+
+  window.addEventListener('resize', () => {
+    perView = getPerView();
+    index = Math.min(index, maxIndex());
+    update();
+  }, { passive: true });
+
+  update();
+
+  /* ── Lightbox ── */
+  const lightbox   = document.getElementById('lightbox');
+  const lbContent  = document.getElementById('lightboxContent');
+  const lbCaption  = document.getElementById('lightboxCaption');
+  const lbClose    = document.getElementById('lightboxClose');
+  const lbPrev     = document.getElementById('lightboxPrev');
+  const lbNext     = document.getElementById('lightboxNext');
+  let lbIndex = 0;
+
+  function openLightbox(i) {
+    lbIndex = i;
+    renderLightbox();
+    lightbox.classList.add('open');
+    lightbox.setAttribute('aria-hidden', 'false');
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+  }
+
+  function renderLightbox() {
+    const card = cards[lbIndex];
+    const placeholder = card.querySelector('.screenshot-placeholder').cloneNode(true);
+    const captionMain = card.querySelector('.screenshot-caption').childNodes[0].textContent.trim();
+    const captionDesc = card.querySelector('.screenshot-caption span')?.textContent || '';
+
+    lbContent.innerHTML = '';
+    lbContent.appendChild(placeholder);
+    lbCaption.innerHTML = `<strong>${captionMain}</strong><br>${captionDesc}`;
+  }
+
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => openLightbox(i));
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  lbPrev.addEventListener('click', () => { lbIndex = (lbIndex - 1 + cards.length) % cards.length; renderLightbox(); });
+  lbNext.addEventListener('click', () => { lbIndex = (lbIndex + 1) % cards.length; renderLightbox(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbPrev.click();
+    if (e.key === 'ArrowRight') lbNext.click();
+  });
+})();
+
+
+/* ─────────────────────────────────────
    INIT — mensaje de consola
 ───────────────────────────────────── */
 console.log(
