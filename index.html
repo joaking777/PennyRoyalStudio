@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penny Royal Audio — Producción Musical Libre</title>
+  <meta name="description" content="Penny Royal Audio es un DAW de código abierto, gratuito y pensado para músicos que quieren crear sin límites." />
+
+  <!-- ══════════════ SEO / METADATOS ══════════════ -->
+  <!-- URL canónica: reemplazá por el dominio real cuando lo tengas -->
+  <link rel="canonical" href="https://PennyRoyalAudio.com/" />
+
+  <!-- Open Graph (Facebook, WhatsApp, Discord, LinkedIn...) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Penny Royal Audio" />
+  <meta property="og:title" content="Penny Royal Audio — Producción Musical Libre" />
+  <meta property="og:description" content="Un DAW de código abierto y gratuito, diseñado por músicos para músicos. Sin suscripciones, sin límites." />
+  <!-- Reemplazá por una imagen real de 1200x630px (captura del programa o el logo sobre fondo oscuro) -->
+  <meta property="og:image" content="https://PennyRoyalAudio.com/IMAGENES/og-cover.png"/>
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://PennyRoyalAudio.com/" />
+  <meta property="og:locale" content="es_AR" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Penny Royal Audio — Producción Musical Libre" />
+  <meta name="twitter:description" content="Un DAW de código abierto y gratuito, diseñado por músicos para músicos." />
+  <meta name="twitter:image" content="https://PennyRoyalAudio.com/IMAGENES/og-cover.png" />
+
+  <!-- Verificacion de Google Search Console -->
+  <meta name="google-site-verification" content="kn8697x2Cj54CViEL0r9r5AVrUOlAK8XcNIULOMWlQs" />
+
+  <!-- Declaracion del Sitemap para buscadores -->
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+
+  <!-- Datos estructurados para que Google entienda que es un software -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Penny Royal Audio",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows, Linux",
+    "softwareVersion": "0.1.0",
+    "description": "DAW de código abierto y gratuito para grabar, componer y mezclar música.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html"
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Favicon — logo del proyecto -->
+   <link rel="icon" type="image/png" href="IMAGENES/favicon.png" />
+ <link rel="stylesheet" href="style.css" />
+
+  <!--
+    ═══════════════════════════════════════════════════════════════
+    ESTILO EXTRA PARA QUE LAS CAPTURAS (SCREENSHOTS) SE VEAN BIEN
+    Esto hace que la <img> ocupe todo el espacio de la tarjeta,
+    igual que ocupaba el placeholder gris. No hace falta tocar
+    tu style.css, esto ya lo resuelve.
+    ═══════════════════════════════════════════════════════════════
+  -->
+  <style>
+    .screenshot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Link de accesibilidad: salta directo al contenido con teclado -->
+  <a href="#hero" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- ══════════════ NAVBAR ══════════════ -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <!-- ⬇️ LOGO: poné tu archivo de logo en la carpeta IMAGENES/ con este mismo nombre -->
+        <img src="IMAGENES/logo de la pagina.png" alt="Penny Royal Audio logo" class="nav-logo-img" />        
+        <span class="logo-text">Penny Royal<span class="logo-accent">Audio</span></span>
+      </a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features">Características</a></li>
+        <li><a href="#tutorial">Tutorial</a></li>
+        <li><a href="#download">Descargar</a></li>
+        <li><a href="#roadmap">Roadmap</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li>
+          <!-- repositorio del código del programa -->
+          <a href="https://github.com/joaking777/PennyRoyalStudio" target="_blank" rel="noopener" class="nav-github">
+            <i class="fab fa-github"></i> GitHub
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ══════════════ HERO ══════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero-noise"></div>
+    <div class="hero-grid-lines"></div>
+
+    <!-- Luces ambientales (glow) -->
+    <div class="hero-glow hero-glow-1" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow-2" aria-hidden="true"></div>
+
+    <!-- Partículas flotantes (canvas, generado por JS) -->
+    <canvas class="hero-particles" id="heroParticles" aria-hidden="true"></canvas>
+
+    <!-- Ecualizador decorativo de fondo -->
+    <div class="hero-eq" id="heroEq" aria-hidden="true"></div>
+
+    <!-- Onda de sonido decorativa -->
+    <svg class="hero-wave" id="heroWave" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
+      <path class="hero-wave-path hero-wave-path-1" d="M0,60 Q150,10 300,60 T600,60 T900,60 T1200,60" />
+      <path class="hero-wave-path hero-wave-path-2" d="M0,60 Q150,110 300,60 T600,60 T900,60 T1200,60" />
+    </svg>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Software de producción musical · Código abierto · Gratis</p>
+      <h1 class="hero-title">
+        <span class="title-line">Penny</span>
+        <span class="title-line accent">ROYAL</span>
+        <span class="title-line">AUDIO</span>
+      </h1>
+      <p class="hero-subtitle">
+        Un DAW diseñado por músicos, para músicos.<br>
+        Sin suscripciones. Sin límites. Solo <em>música</em>.
+      </p>
+      <div class="hero-cta">
+        <a href="#download" class="btn btn-primary">
+          <i class="fas fa-download"></i> Descargar gratis
+        </a>
+        <a href="#tutorial" class="btn btn-ghost">
+          <i class="fas fa-play-circle"></i> Ver tutorial
+        </a>
+      </div>
+      <div class="hero-badges">
+        <span class="badge"><i class="fab fa-windows"></i> Windows</span>
+        <span class="badge"><i class="fab fa-linux"></i> Linux</span>
+        <span class="badge"><i class="fab fa-github"></i> Open Source</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="daw-mockup" id="dawMockup">
+        <div class="daw-titlebar">
+          <span class="daw-dot red"></span>
+          <span class="daw-dot yellow"></span>
+          <span class="daw-dot green"></span>
+          <span class="daw-titlename">Penny_royal_Audio — proyecto_sin_nombre.prs</span>
+          <div class="daw-tabs" role="tablist" aria-label="Vistas del DAW">
+            <button class="daw-tab active" data-view="timeline" role="tab" aria-selected="true">Timeline</button>
+            <button class="daw-tab" data-view="mixer" role="tab" aria-selected="false">Mixer</button>
+            <button class="daw-tab" data-view="pianoroll" role="tab" aria-selected="false">Piano Roll</button>
+          </div>
+        </div>
+
+        <div class="daw-body">
+
+          <!-- ── Vista: TIMELINE ── -->
+          <div class="daw-view daw-view-timeline active" data-view-panel="timeline">
+            <div class="daw-ruler" id="dawRuler" aria-hidden="true">
+              <span>0:00</span><span>0:04</span><span>0:08</span><span>0:12</span>
+              <span>0:16</span><span>0:20</span><span>0:24</span><span>0:28</span>
+              <div class="daw-playhead" id="dawPlayhead"></div>
+            </div>
+            <div class="daw-tracks">
+              <div class="daw-track" style="--c:#8B1A1A">
+                <div class="track-label"><i class="fas fa-guitar"></i> Guitarra
+                  <span class="track-plugins"><span class="plugin-chip">EQ</span><span class="plugin-chip">Comp</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="1"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="1"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#4A5240">
+                <div class="track-label"><i class="fas fa-drum"></i> Batería
+                  <span class="track-plugins"><span class="plugin-chip">Gate</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="2"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="2"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#7A6840">
+                <div class="track-label"><i class="fas fa-microphone"></i> Voz
+                  <span class="track-plugins"><span class="plugin-chip">Reverb</span><span class="plugin-chip">De-ess</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="3"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="3"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#3A5A5A">
+                <div class="track-label"><i class="fas fa-music"></i> Bajo
+                  <span class="track-plugins"><span class="plugin-chip">Comp</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="4"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="4"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#6B4A8B">
+                <div class="track-label"><i class="fas fa-wave-square"></i> Synth
+                  <span class="track-plugins"><span class="plugin-chip">Delay</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="5"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="5"></span></div>
+              </div>
+              <div class="daw-track" style="--c:#8B6B2A">
+                <div class="track-label"><i class="fas fa-piano-keyboard" style="font-family:inherit">🎹</i> Piano
+                  <span class="track-plugins"><span class="plugin-chip">Reverb</span></span>
+                </div>
+                <div class="track-wave">
+                  <div class="waveform" data-track="6"></div>
+                </div>
+                <div class="track-vu"><span class="vu-bar" data-vu="6"></span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Vista: MIXER ── -->
+          <div class="daw-view daw-view-mixer" data-view-panel="mixer">
+            <div class="mixer-strips">
+              <div class="mixer-strip" style="--c:#8B1A1A"><span class="strip-label">Gtr</span><div class="strip-fader"><div class="fader-fill" style="height:62%"></div><div class="fader-knob" style="bottom:62%"></div></div><span class="strip-db">-4dB</span></div>
+              <div class="mixer-strip" style="--c:#4A5240"><span class="strip-label">Bat</span><div class="strip-fader"><div class="fader-fill" style="height:78%"></div><div class="fader-knob" style="bottom:78%"></div></div><span class="strip-db">-1dB</span></div>
+              <div class="mixer-strip" style="--c:#7A6840"><span class="strip-label">Voz</span><div class="strip-fader"><div class="fader-fill" style="height:70%"></div><div class="fader-knob" style="bottom:70%"></div></div><span class="strip-db">-2dB</span></div>
+              <div class="mixer-strip" style="--c:#3A5A5A"><span class="strip-label">Bajo</span><div class="strip-fader"><div class="fader-fill" style="height:55%"></div><div class="fader-knob" style="bottom:55%"></div></div><span class="strip-db">-6dB</span></div>
+              <div class="mixer-strip" style="--c:#6B4A8B"><span class="strip-label">Syn</span><div class="strip-fader"><div class="fader-fill" style="height:44%"></div><div class="fader-knob" style="bottom:44%"></div></div><span class="strip-db">-9dB</span></div>
+              <div class="mixer-strip" style="--c:#8B6B2A"><span class="strip-label">Pno</span><div class="strip-fader"><div class="fader-fill" style="height:50%"></div><div class="fader-knob" style="bottom:50%"></div></div><span class="strip-db">-7dB</span></div>
+              <div class="mixer-strip mixer-strip-master"><span class="strip-label">Master</span><div class="strip-fader"><div class="fader-fill" style="height:85%"></div><div class="fader-knob" style="bottom:85%"></div></div><span class="strip-db">0dB</span></div>
+            </div>
+          </div>
+
+          <!-- ── Vista: PIANO ROLL ── -->
+          <div class="daw-view daw-view-pianoroll" data-view-panel="pianoroll">
+            <div class="pianoroll" id="pianoRoll" aria-hidden="true">
+              <!-- grilla y notas generadas por CSS/JS -->
+            </div>
+          </div>
+
+          <div class="daw-transport">
+            <button class="transport-btn" aria-label="Retroceder"><i class="fas fa-backward"></i></button>
+            <button class="transport-btn play-btn" id="playBtn" aria-label="Reproducir" aria-pressed="false"><i class="fas fa-play"></i></button>
+            <button class="transport-btn" aria-label="Avanzar"><i class="fas fa-forward"></i></button>
+            <div class="transport-time" id="transportTime">00:02:34</div>
+            <div class="transport-bpm">♩ 120 BPM</div>
+            <div class="master-vu" aria-hidden="true">
+              <span class="master-vu-bar" data-master-vu="L"></span>
+              <span class="master-vu-bar" data-master-vu="R"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scrolleá para explorar</span>
+      <i class="fas fa-chevron-down"></i>
+    </div>
+  </section>
+
+  <!-- ══════════════ ABOUT BAND ══════════════ -->
+  <section class="about-strip">
+    <div class="strip-inner">
+      <p>
+        <i class="fas fa-guitar"></i> &nbsp;Hecho con distorsión y amor &nbsp;·&nbsp;
+        <i class="fas fa-code-branch"></i> &nbsp;Código libre para siempre &nbsp;·&nbsp;
+        <i class="fas fa-users"></i> &nbsp;Comunidad de músicos &nbsp;·&nbsp;
+        <i class="fas fa-infinity"></i> &nbsp;Sin restricciones creativas
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════ FEATURES ══════════════ -->
+  <section class="section features" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">¿Qué puede hacer?</span>
+        <h2 class="section-title">Todo lo que necesitás<br>para <em>crear</em></h2>
+        <p class="section-sub">Penny Royal Audio nació en una juntada. Sabemos lo que un músico real necesita.</p>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-layer-group"></i></div>
+          <h3>Pistas ilimitadas</h3>
+          <p>Agregá tantas pistas de audio, MIDI o instrumentos virtuales como tu proyecto necesite. Sin paywall, sin límite.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-sliders"></i></div>
+          <h3>Mixer integrado</h3>
+          <p>Mezclá con ecualizadores, compresores y efectos incluidos. Controlá niveles, paneo y sends de manera intuitiva.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-piano-keyboard" style="font-family: inherit">🎹</i></div>
+          <h3>Piano Roll & MIDI</h3>
+          <p>Editor de piano roll completo para componer melodías, arreglos y beats con total precisión.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-plug"></i></div>
+          <h3>Soporte VST / LV2</h3>
+          <p>Usá tus plugins favoritos. Compatible con VST2, VST3 y LV2. Tu cadena de producción, tu elección.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-microphone-alt"></i></div>
+          <h3>Grabación en vivo</h3>
+          <p>Grabá instrumentos y voz directamente. Monitoreo de baja latencia para que nada rompa el flow creativo.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-file-export"></i></div>
+          <h3>Exportación flexible</h3>
+          <p>Exportá tu proyecto en WAV, MP3, FLAC u OGG. Stem export para entregar pistas separadas a colaboradores.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-code"></i></div>
+          <h3>100% código abierto</h3>
+          <p>El código fuente está en GitHub. Podés leerlo, modificarlo, contribuir. La música no debería tener dueño.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-laptop"></i></div>
+          <h3>Multiplataforma</h3>
+          <p>Funciona en Windows y Linux. Tu música no debería depender del sistema operativo que podés pagar.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ TUTORIAL ══════════════ -->
+  <section class="section tutorial" id="tutorial">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Tutorial completo</span>
+        <h2 class="section-title">15 minutos para<br>empezar a <em>hacer música</em></h2>
+        <p class="section-sub">Desde cero hasta tu primera canción. Sin experiencia previa necesaria.</p>
+      </div>
+
+      <div class="tutorial-layout">
+        <div class="video-wrapper">
+          <!-- Placeholder para el video tutorial real. Reemplazá el src con tu video de YouTube/Vimeo -->
+          <div class="video-placeholder" id="videoPlaceholder" role="button" tabindex="0" aria-label="Reproducir tutorial completo">
+            <div class="video-play-overlay" id="videoPlay">
+              <div class="video-play-btn">
+                <i class="fas fa-play"></i>
+              </div>
+              <p class="video-duration"><i class="fas fa-clock"></i> 15:00 min</p>
+              <p class="video-title">Tutorial completo — Penny Royal Audio</p>
+            </div>
+            <!-- ⬇️ VIDEO: reemplazá TU_VIDEO_ID por el ID real de tu video de YouTube -->
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/TU_VIDEO_ID?rel=0"
+              title="Tutorial Penny Royal Audio" frameborder="0" allowfullscreen loading="lazy"></iframe>
+            
+          </div>
+        </div>
+
+        <div class="tutorial-chapters">
+          <h3 class="chapters-title"><i class="fas fa-list-ol"></i> Capítulos del tutorial</h3>
+          <ol class="chapter-list">
+            <li class="chapter-item" data-time="0:00" tabindex="0">
+              <span class="chapter-time">0:00</span>
+              <div class="chapter-info">
+                <strong>Introducción e instalación</strong>
+                <span>Cómo instalar Penny Royal Audio en tu sistema operativo</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="1:30" tabindex="0">
+              <span class="chapter-time">1:30</span>
+              <div class="chapter-info">
+                <strong>Interfaz y navegación</strong>
+                <span>Conocé cada panel: mixer, timeline, biblioteca de samples</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="3:15" tabindex="0">
+              <span class="chapter-time">3:15</span>
+              <div class="chapter-info">
+                <strong>Crear tu primer proyecto</strong>
+                <span>Configurar BPM, compás y agregar las primeras pistas</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="5:40" tabindex="0">
+              <span class="chapter-time">5:40</span>
+              <div class="chapter-info">
+                <strong>Grabación de audio</strong>
+                <span>Conectar micrófono/instrumento y grabar en vivo</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="8:00" tabindex="0">
+              <span class="chapter-time">8:00</span>
+              <div class="chapter-info">
+                <strong>Piano Roll y MIDI</strong>
+                <span>Componer con el editor MIDI y usar instrumentos virtuales</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="10:30" tabindex="0">
+              <span class="chapter-time">10:30</span>
+              <div class="chapter-info">
+                <strong>Mezcla básica</strong>
+                <span>Volúmenes, paneo, EQ y reverb para que todo suene bien</span>
+              </div>
+            </li>
+            <li class="chapter-item" data-time="13:00" tabindex="0">
+              <span class="chapter-time">13:00</span>
+              <div class="chapter-info">
+                <strong>Exportar tu canción</strong>
+                <span>Renderizar en MP3, WAV o FLAC listo para compartir</span>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Paso a paso visual -->
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <i class="fas fa-download step-icon"></i>
+          <h4>Instalá el programa</h4>
+          <p>Descargá el instalador para tu sistema y seguí los pasos. Tarda menos de 2 minutos.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <i class="fas fa-folder-plus step-icon"></i>
+          <h4>Creá un proyecto</h4>
+          <p>Abrí Penny Royal, configurá el BPM y el nombre de tu proyecto. ¡Ya estás listo!</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <i class="fas fa-music step-icon"></i>
+          <h4>Componé y grabá</h4>
+          <p>Usá el piano roll, grabá tu instrumento, importá samples. La canción empieza a tomar forma.</p>
+        </div>
+        <div class="step-arrow" aria-hidden="true"><i class="fas fa-chevron-right"></i></div>
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <i class="fas fa-share-alt step-icon"></i>
+          <h4>Exportá y compartí</h4>
+          <p>Exportá en el formato que quieras y compartí tu música con el mundo.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══════════════ SCREENSHOTS ══════════════ -->
+  <section class="section screenshots" id="screenshots">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Capturas del programa</span>
+        <h2 class="section-title">Mirá cómo se ve<br><em>por dentro</em></h2>
+      </div>
+      <!-- Carrusel de capturas -->
+      <div class="screenshots-carousel" id="screenshotsCarousel">
+        <button class="carousel-nav carousel-prev" id="carouselPrev" aria-label="Captura anterior">
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+
+        <div class="carousel-viewport" tabindex="0" role="region" aria-label="Carrusel de capturas del programa. Usá las flechas del teclado para navegar" id="carouselViewport">
+          <div class="carousel-track" id="carouselTrack">
+
+            <!-- Tarjeta 1: Timeline -->
+            <div class="screenshot-card" data-index="0" tabindex="0" role="button" aria-label="Ver captura ampliada: Timeline y editor de pistas">
+              <!-- ⬇️ Reemplazá el src por tu captura real -->
+              <img src="IMAGENES/timeline.jpeg" alt="Timeline y editor de pistas" class="screenshot-img" />
+              <p class="screenshot-caption">Timeline y editor de pistas<span>Organizá tus pistas de audio y MIDI con un vistazo claro de todo el proyecto.</span></p>
+            </div>
+
+            <!-- Tarjeta 2: Mixer -->
+            <div class="screenshot-card" data-index="1" tabindex="0" role="button" aria-label="Ver captura ampliada: Consola de mezcla integrada">
+              <!-- ⬇️ Reemplazá el src por tu captura real -->
+              <img src="IMAGENES/consola de mezcla integrada.jpeg" alt="Consola de mezcla integrada" class="screenshot-img" />
+              <p class="screenshot-caption">Consola de mezcla integrada<span>EQ, compresión y sends por canal, con medidores en tiempo real.</span></p>
+            </div>
+
+            <!-- Tarjeta 3: Piano Roll -->
+            <div class="screenshot-card" data-index="2" tabindex="0" role="button" aria-label="Ver captura ampliada: Editor de piano roll y MIDI">
+              <!-- ⬇️ Reemplazá el src por tu captura real -->
+              <img src="IMAGENES/piano-roll.jpg" alt="Editor de piano roll y MIDI" class="screenshot-img" />
+              <p class="screenshot-caption">Editor de piano roll y MIDI<span>Componé con precisión: velocity, cuantización y automatizaciones.</span></p>
+            </div>
+
+            <!-- Tarjeta 4: Plugins -->
+            <div class="screenshot-card" data-index="3" tabindex="0" role="button" aria-label="Ver captura ampliada: Plugins VST / LV2">
+              <!-- ⬇️ Reemplazá el src por tu captura real -->
+              <img src="IMAGENES/Plugins VST.jpeg" alt="Plugins VST / LV2" class="screenshot-img" />
+              <p class="screenshot-caption">Plugins VST / LV2<span>Cargá tu cadena de efectos favorita en cada canal.</span></p>
+            </div>
+
+            <!-- Tarjeta 5: Samples -->
+            <div class="screenshot-card" data-index="4" tabindex="0" role="button" aria-label="Ver captura ampliada: Biblioteca de samples">
+              <!-- ⬇️ Reemplazá el src por tu captura real -->
+              <img src="IMAGENES/samples.jpg" alt="Biblioteca de samples" class="screenshot-img" />
+              <p class="screenshot-caption">Biblioteca de samples<span>Arrastrá y soltá samples directamente a tus pistas.</span></p>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="carousel-nav carousel-next" id="carouselNext" aria-label="Siguiente captura">
+          <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="Selector de capturas"></div>
+
+      <p class="screenshots-note"><i class="fas fa-info-circle"></i> Hacé clic en cualquier captura para verla en grande.</p>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de captura">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar"><i class="fas fa-times" aria-hidden="true"></i></button>
+      <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Captura anterior"><i class="fas fa-chevron-left" aria-hidden="true"></i></button>
+      <div class="lightbox-content" id="lightboxContent">
+        <!-- Se clona la card seleccionada acá, con zoom -->
+      </div>
+      <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Siguiente captura"><i class="fas fa-chevron-right" aria-hidden="true"></i></button>
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+  </section>
+
+  <!-- ══════════════ DOWNLOAD ══════════════ -->
+  <section class="section download" id="download">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Gratis. Para siempre.</span>
+        <h2 class="section-title">Descargá<br>Penny Royal Audio</h2>
+        <p class="section-sub">Versión actual: <strong>v0.1.0</strong></p>
+      </div>
+
+      <div class="download-grid">
+        <div class="download-card featured">
+          <div class="download-os">
+            <i class="fab fa-windows" aria-hidden="true"></i>
+            <h3>Windows</h3>
+          </div>
+          <p>Compatible con Windows 10 y 11 (64-bit)</p>
+          <ul class="download-specs">
+            <li><i class="fas fa-check" aria-hidden="true"></i> Instalador .exe</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> ~45 MB</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Sin dependencias extra</li>
+          </ul>
+          <!-- Reemplazá href con la URL real de descarga -->
+          <a href="#" class="btn btn-download" onclick="alert('⚠️ Reemplazá este link con la URL real de descarga para Windows'); return false;">
+            <i class="fas fa-download" aria-hidden="true"></i> Descargar para Windows
+          </a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-os">
+            <i class="fab fa-linux" aria-hidden="true"></i>
+            <h3>Linux</h3>
+          </div>
+          <p>Paquetes .deb (Ubuntu/Debian) y .AppImage</p>
+          <ul class="download-specs">
+            <li><i class="fas fa-check" aria-hidden="true"></i> .deb y .AppImage</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> ~42 MB</li>
+            <li><i class="fas fa-check" aria-hidden="true"></i> Ubuntu 20.04+, Fedora</li>
+          </ul>
+          <a href="#" class="btn btn-download" onclick="alert('⚠️ Reemplazá este link con la URL real de descarga para Linux'); return false;">
+            <i class="fas fa-download" aria-hidden="true"></i> Descargar para Linux
+          </a>
+        </div>
+      </div>
+
+      <!-- GitHub -->
+      <div class="github-banner">
+        <div class="github-text">
+          <i class="fab fa-github github-icon" aria-hidden="true"></i>
+          <div>
+            <h3>Código fuente en GitHub</h3>
+            <p>Penny Royal Audio es software libre. Leé el código, reportá bugs, contribuí con tu propia magia.</p>
+            <!-- Badges de GitHub — apuntan al repo real del programa. Se actualizan solas cuando el repo tenga actividad -->
+            <div class="github-badges">
+              <img src="https://img.shields.io/github/stars/joaking777/PennyRoyalAudio?style=flat-square&color=DE9F76&labelColor=1A1A1A" alt="Estrellas en GitHub" loading="lazy" />
+              <img src="https://img.shields.io/github/issues/joaking777/PennyRoyalAudio?style=flat-square&color=B37E6C&labelColor=1A1A1A" alt="Issues abiertos" loading="lazy" />
+              <img src="https://img.shields.io/github/license/joaking777/PennyRoyalAudio?style=flat-square&color=CDAC80&labelColor=1A1A1A" alt="Licencia GPL v3.0" loading="lazy" />
+            </div>
+          </div>
+        </div>
+        <!-- Reemplazá href con la URL real del repositorio del programa -->
+        <a href="https://github.com/joaking777/PennyRoyalAudio" target="_blank" rel="noopener" class="btn btn-github">
+          <i class="fab fa-github" aria-hidden="true"></i> Ver en GitHub
+        </a>
+      </div>
+
+      <p class="license-note">
+        <i class="fas fa-balance-scale" aria-hidden="true"></i>
+        Penny Royal Audio se distribuye bajo la licencia
+        <strong>GNU General Public License v3.0</strong>.
+        Libre para usar, estudiar, modificar y distribuir.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════ ROADMAP ══════════════ -->
+  <section class="section roadmap" id="roadmap">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">El proyecto está vivo</span>
+        <h2 class="section-title">Qué viene<br>en el <em>camino</em></h2>
+        <p class="section-sub">Así vamos avanzando. El roadmap se actualiza a medida que la comunidad aporta ideas y código.</p>
+      </div>
+
+      <ol class="roadmap-timeline">
+        <li class="roadmap-item done">
+          <span class="roadmap-marker" aria-hidden="true"><i class="fas fa-check"></i></span>
+          <div class="roadmap-content">
+            <span class="roadmap-status">Listo · v0.1.0 </span>
+            <h3>Primer lanzamiento público</h3>
+            <p>Timeline multipista, mixer básico, piano roll, grabación en vivo y soporte VST/LV2.</p>
+          </div>
+        </li>
+        <li class="roadmap-item active">
+          <span class="roadmap-marker" aria-hidden="true"><i class="fas fa-hammer"></i></span>
+          <div class="roadmap-content">
+            <span class="roadmap-status">En desarrollo</span>
+            <h3>Automatización y sends avanzados</h3>
+            <p>Curvas de automatización por pista y buses de envío para cadenas de efectos más complejas.</p>
+          </div>
+        </li>
+        <li class="roadmap-item">
+          <span class="roadmap-marker" aria-hidden="true"><i class="fas fa-map-signs"></i></span>
+          <div class="roadmap-content">
+            <span class="roadmap-status">Próximamente</span>
+            <h3>Colaboración en tiempo real</h3>
+            <p>Sesiones compartidas para mezclar y componer con otros músicos sin salir del programa.</p>
+          </div>
+        </li>
+        <li class="roadmap-item">
+          <span class="roadmap-marker" aria-hidden="true"><i class="fas fa-lightbulb"></i></span>
+          <div class="roadmap-content">
+            <span class="roadmap-status">Idea de la comunidad</span>
+            <h3>¿Qué querés vos?</h3>
+            <p>Este lugar es tuyo. Proponé la próxima función en Discusiones de GitHub y sumala al roadmap.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ══════════════ FAQ ══════════════ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Preguntas frecuentes</span>
+        <h2 class="section-title">¿Tenés dudas?<br>Acá las <em>respuestas</em></h2>
+      </div>
+
+      <div class="faq-list">
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Penny Royal Audio es realmente gratis?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, completamente gratis. No hay versión premium, sin suscripciones, sin funciones bloqueadas. Penny Royal Audio es software libre bajo licencia GPL v3. Podés usarlo, modificarlo y distribuirlo sin pagar nada.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Necesito experiencia previa en producción musical?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>No. El tutorial de 15 minutos en esta misma página te lleva desde cero hasta exportar tu primera canción. Penny Royal Audio fue diseñado para ser intuitivo, con una interfaz limpia que no te abruma desde el primer momento.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Funciona con mis plugins VST existentes?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Sí. Penny Royal Audio es compatible con plugins VST2, VST3 y LV2. Podés cargar tus plugins favoritos directamente desde la interfaz del programa. Solo tenés que indicarle la carpeta donde los tenés instalados.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Qué tan potente tiene que ser mi computadora?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Penny Royal Audio fue diseñado para correr en hardware modesto. Requisitos mínimos: procesador dual-core 2GHz, 4GB de RAM, 500MB de espacio libre. Para proyectos grandes con muchos plugins, recomendamos 8GB de RAM o más.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Puedo colaborar con otros músicos usando Penny Royal Audio?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Podés exportar stems (pistas individuales) en formato WAV para compartir con colaboradores. El archivo de proyecto .prs también puede abrirse en cualquier computadora con Penny Royal Audio instalado, facilitando el trabajo colaborativo.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿Cómo puedo reportar un error o pedir una función nueva?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Usá la sección de <em>Issues</em> en el repositorio de GitHub. También podés contribuir con código si sabés programar. Todo el desarrollo pasa por GitHub de manera pública y transparente.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" aria-expanded="false">
+            <span>¿El programa tiene samples o loops incluidos?</span>
+            <i class="fas fa-plus faq-icon" aria-hidden="true"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Sí, Penny Royal Audio incluye una biblioteca básica de samples libres de derechos para que puedas empezar a crear de inmediato. Podés agregar tus propias carpetas de samples desde el explorador de archivos integrado.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ COMMUNITY ══════════════ -->
+  <section class="section community">
+    <div class="container">
+      <div class="community-inner">
+        <div class="community-text">
+          <span class="section-tag">Comunidad</span>
+          <h2>Hacemos esto<br>entre <em>todos</em></h2>
+          <p>Penny Royal Audio es un proyecto comunitario. Cada línea de código, cada bug reportado y cada idea compartida hace al programa mejor para todos los músicos que lo usan.</p>
+          <div class="community-links">
+            <a href="https://github.com/joaking777/PennyRoyalStudio-Community" target="_blank" rel="noopener" class="community-link">
+              <i class="fab fa-github" aria-hidden="true"></i> Contribuir en GitHub
+            </a>
+          </div>
+        </div>
+        <div class="community-stats">
+          <div class="stat">
+            <span class="stat-number">∞</span>
+            <span class="stat-label">Posibilidades creativas</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">0</span>
+            <span class="stat-label">Dólares para usarlo</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number">GPL</span>
+            <span class="stat-label">Licencia libre v3.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ FOOTER ══════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="nav-logo footer-logo">
+              <img src="IMAGENES/favicon.png" alt="Penny Royal Audio logo" class="nav-logo-img" style="width:28px;height:28px;" />            <span class="logo-text">Penny Royal <span class="logo-accent">Audio</span></span>
+          </span>
+          <p>Software de producción musical libre. Hecho con distorsión, café y amor por la música.</p>
+          <p class="footer-license">GNU GPL v3.0 · Código abierto</p>
+        </div>
+        <div class="footer-links">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="#features">Características</a></li>
+            <li><a href="#tutorial">Tutorial</a></li>
+            <li><a href="#download">Descargar</a></li>
+            <li><a href="#roadmap">Roadmap</a></li>
+            <li><a href="#faq">Preguntas frecuentes</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Proyecto</h4>
+          <ul>
+            <li><a href="https://github.com/joaking777/PennyRoyalStudio" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+            <li><a href="https://github.com/joaking777/PennyRoyalStudio-Community/issues" target="_blank" rel="noopener"><i class="fas fa-bug" aria-hidden="true"></i> Reportar un bug</a></li>
+            <li><a href="https://github.com/joaking777/PennyRoyalStudio-Community/discussions" target="_blank" rel="noopener"><i class="fas fa-code-branch" aria-hidden="true"></i> Contribuir</a></li>
+            <li><a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener"><i class="fas fa-file-alt" aria-hidden="true"></i> Licencia GPL</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Penny Royal Audio · Software libre bajo GNU GPL v3.0</p>
+        <p>Inspirado en la música que importa. Hecho con <i class="fas fa-heart" style="color:#8B1A1A" aria-hidden="true"></i> para músicos.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
